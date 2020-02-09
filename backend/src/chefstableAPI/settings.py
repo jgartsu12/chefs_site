@@ -21,6 +21,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,12 +36,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'rest_auth.registration',
+    'rest_auth.registration', #STOPPED
 
     'corsheaders',
 
     'soups',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -133,5 +138,4 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-SITE_ID = 1
 
