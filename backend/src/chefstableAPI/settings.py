@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'rest_auth.registration', #STOPPED
+    'rest_auth.registration', #STOPPED 1:19:12
 
     'corsheaders',
 
