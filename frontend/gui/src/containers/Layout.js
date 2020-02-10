@@ -1,9 +1,8 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
-
 
 const { Header, Content, Footer } = Layout;
 
