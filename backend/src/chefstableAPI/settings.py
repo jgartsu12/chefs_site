@@ -111,7 +111,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 SITE_ID = 1
 
@@ -123,12 +123,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
-)
-# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:3000',
+# )
+CORS_ORIGIN_ALLOW_ALL = True
 
-CSRF_COOKIE_NAME = "csrftoken"
+# CSRF_COOKIE_NAME = "csrftoken"
 
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
