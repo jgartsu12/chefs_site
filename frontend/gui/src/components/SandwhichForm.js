@@ -14,7 +14,7 @@ class SandwhichForm extends React.Component {
 // eslint-disable-next-line
         switch( requestType ) {
             case 'post':
-                return axios.post('http://127.0.0.1:8000/api/', {
+                return axios.post('http://127.0.0.1:8000/api_sandwhiches/', {
                     title: title,
                     content: content
                 })
@@ -22,7 +22,7 @@ class SandwhichForm extends React.Component {
                 .catch(error => console.err(error));
             // eslint-disable-next-line
             case 'put':
-                return axios.put(`http://127.0.0.1:8000/api/${sandwhichID}/`, {
+                return axios.put(`http://127.0.0.1:8000/api_sandwhiches/${sandwhichID}/`, {
                     title: title,
                     content: content
                 })

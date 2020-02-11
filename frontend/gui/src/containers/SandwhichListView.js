@@ -11,7 +11,7 @@ class SandwhichList extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/')
+        axios.get('http://127.0.0.1:8000/api_sandwhiches/')
             .then(res => {
                 this.setState({
                     sandwhiches: res.data

@@ -13,7 +13,7 @@ class SandwhichDetail extends React.Component {
     
     componentDidMount() {
         const sandwhichID = this.props.match.params.sandwhichID;
-        axios.get(`http://127.0.0.1:8000/api/${sandwhichID}`)
+        axios.get(`http://127.0.0.1:8000/api_sandwhiches/${sandwhichID}`)
             .then(res => {
                 this.setState({
                     sandwhich: res.data
@@ -23,7 +23,7 @@ class SandwhichDetail extends React.Component {
 
     handleDelete = (event) => {
         const sandwhichID = this.props.match.params.sandwhichID;
-        axios.delete(`http://127.0.0.1:8000/api/${sandwhichID}`);
+        axios.delete(`http://127.0.0.1:8000/api_sandwhiches/${sandwhichID}`);
         this.props.history.push('/');
     }
 
