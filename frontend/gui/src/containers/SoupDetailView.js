@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { Button, Card } from 'antd';
 
-import CustomForm from '../components/Form';
+import SoupForm from '../components/SoupForm';
 
 class SoupDetail extends React.Component {
     
@@ -34,7 +34,7 @@ class SoupDetail extends React.Component {
                     <p>{this.state.soup.content}</p>
                     {/* <p>{this.state.soup.description}</p> */}
                 </Card>
-                <CustomForm
+                <SoupForm
                     requestType="put"
                     soupID={this.props.match.params.soupID}
                     btnText="Update" />

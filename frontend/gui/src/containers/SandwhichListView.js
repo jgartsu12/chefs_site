@@ -1,20 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 
-import Soups from '../components/Soup';
-import SoupForm from '../components/SoupForm';
+import Sandwhiches from '../components/Sandwhich';
+import SandwhichForm from '../components/SandwhichForm';
 
-class SoupList extends React.Component {
+class SandwhichList extends React.Component {
 
     state = {
-        soups: []
+        sandwhiches: []
     }
 
     componentDidMount() {
         axios.get('http://127.0.0.1:8000/api/')
             .then(res => {
                 this.setState({
-                    soups: res.data
+                    sandwhiches: res.data
                 });
             })
 
@@ -23,16 +23,16 @@ class SoupList extends React.Component {
     render() {
         return (
             <div>
-                <Soups data={this.state.soups} />
+                <Sandwhiches data={this.state.sandwhiches} />
                 <br />
-                <h2>Create a Soup</h2>
-                <SoupForm
+                <h2>Add a Sandwhich</h2>
+                <SandwhichForm
                     requestType="post"
-                    soupID={null}
+                    sandwhichID={null}
                     btnText="Create" />
             </div>
         )
     }
 }
 
-export default SoupList;
+export default SandwhichList;

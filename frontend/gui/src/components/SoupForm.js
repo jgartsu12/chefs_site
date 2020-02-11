@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const FormItem = Form.Item;
 
-class CustomForm extends React.Component {
+class SoupForm extends React.Component {
 
     handleFormSubmit = (event, requestType, soupID) => {
         // event.preventDefault();
@@ -53,4 +53,4 @@ class CustomForm extends React.Component {
     }
 }
 
-export default CustomForm;
+export default SoupForm;
