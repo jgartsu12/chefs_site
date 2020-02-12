@@ -1,23 +1,30 @@
 import React from 'react';
 import axios from 'axios';
-
 import Sandwhiches from '../components/Sandwhich';
 import SandwhichForm from '../components/SandwhichForm';
 
 class SandwhichList extends React.Component {
-
     state = {
         sandwhiches: []
-    }
+    };
 
-    componentDidMount() {
+    fetchSandwhiches = () => {
         axios.get('http://127.0.0.1:8000/api_sandwhiches/')
             .then(res => {
                 this.setState({
                     sandwhiches: res.data
-                });
-            })
+            });
+        });
+    }
 
+    componentDidMount() {
+        this.fetchSandwhiches();
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.token) {
+            this.fetchSandwhiches();
+        }
     }
 
     render() {
@@ -31,7 +38,7 @@ class SandwhichList extends React.Component {
                     sandwhichID={null}
                     btnText="Create" />
             </div>
-        )
+        );
     }
 }
 

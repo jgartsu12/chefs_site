@@ -1,24 +1,24 @@
-from soups.api.views import SoupViewSet
-from rest_framework.routers import DefaultRouter
+from django.urls import path 
 
-router = DefaultRouter()
-router.register(r'', SoupViewSet, basename='soups')
-urlpatterns = router.urls
+from .views import (
+    SoupListView,
+    SoupDetailView,
+    SoupCreateView,
+    SoupUpdateView,
+    SoupDeleteView
+)
 
-# from django.urls import path 
+urlpatterns = [
+    path('', SoupListView.as_view()),
+    path('create/', SoupCreateView.as_view()),
+    path('<pk>', SoupDetailView.as_view()),
+    path('<pk>/update/', SoupUpdateView.as_view()),
+    path('<pk>/delete/', SoupDeleteView.as_view())
+]
 
-# from .views import (
-#     SoupListView,
-#     SoupDetailView,
-#     SoupCreateView,
-#     SoupUpdateView,
-#     SoupDeleteView
-# )
+# from soups.api.views import SoupViewSet
+# from rest_framework.routers import DefaultRouter
 
-# urlpatterns = [
-#     path('', SoupListView.as_view()),
-#     path('create/', SoupCreateView.as_view()),
-#     path('<pk>', SoupDetailView.as_view()),
-#     path('<pk>/update/', SoupUpdateView.as_view()),
-#     path('<pk>/delete/', SoupDeleteView.as_view())
-# ]
+# router = DefaultRouter()
+# router.register(r'', SoupViewSet, basename='soups')
+# urlpatterns = router.urls

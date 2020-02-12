@@ -9,11 +9,11 @@ import Dashboard from './containers/Dash';
 
 const BaseRouter = () => (
     <div>
-        <Route exact path="/" component={Dashboard} />{" "}
-        <Route exact path="/sandwhiches/:sandwhichID/" component={SandwhichDetail} /> {" "}
-        <Route exact path="/soups/:soupID/" component={SoupDetail} />{" "}
-        <Route exact path="/login/" component={Login} />{" "}
-        <Route exact path="/signup/" component={Signup} />{" "}
+        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/sandwhiches/:sandwhichID/" component={SandwhichDetail} /> 
+        <Route exact path="/soups/:soupID/" component={SoupDetail} />
+        <Route exact path="/login/" component={Login} />
+        <Route exact path="/signup/" component={Signup} />
     </div>
 );
 
