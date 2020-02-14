@@ -3,9 +3,8 @@ import { Form, Input, Button } from 'antd';
 import { connect } from "react-redux";
 import axios from 'axios';
 
-
-
 const FormItem = Form.Item;
+
 
 class SandwhichForm extends React.Component {
     
@@ -28,16 +27,18 @@ class SandwhichForm extends React.Component {
         await axios.post('http://127.0.0.1:8000/api_sandwhiches/create/', postObj)
             .then(res => {
                 if (res.status === 201) {
-                    this.props.history.push('/api_sandwhiches/');
+                    this.props.history.push(`/`);
                 }
             })
+            .catch(error => console.error(error));
     } else if (requestType === "put") {
         await axios.put(`http://127.0.0.1:8000/api_sandwhiches/${sandwhichID}/update/`, postObj)
             .then(res => {
                 if (res.status === 200) {
-                    this.props.history.push('/api_sandwhiches/');
+                    this.props.history.push(`/`);
                 }
             })
+            .catch(error => console.error(error));
         }
     };
    
