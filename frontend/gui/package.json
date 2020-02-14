@@ -36,7 +36,12 @@
       "last 1 safari version"
     ]
   },
+  "engines": {
+    "node": "9.5.0",
+    "npm": "6.4.1"
+  },
   "devDependencies": {
-    "webpack": "^4.41.5"
+    "webpack": "^4.41.5",
+    "react-cookies":"^0.1.1"
   }
 }

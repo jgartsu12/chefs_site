@@ -39,11 +39,11 @@ class CustomLayout extends React.Component {
                     </Menu.Item>
 
                     <Menu.Item key="3">
-                        <Link to="/sandwhiches/:sandwhichID/">Sandwhiches</Link>
+                        <Link to="/api_sandwhiches/">Sandwhiches</Link>
                     </Menu.Item>
 
                     <Menu.Item key="4">
-                        <Link to="/soups/:soupID/">Soups</Link>
+                        <Link to="/api/">Soups</Link>
                     </Menu.Item>
                     
                 </Menu>

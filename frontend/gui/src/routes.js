@@ -6,10 +6,12 @@ import SandwhichDetail from './containers/SandwhichDetailView';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
 import Dashboard from './containers/Dash';
+import SandwhichList from './containers/SandwhichListView';
 
 const BaseRouter = () => (
     <div>
         <Route exact path="/" component={Dashboard} />
+        <Route exact path = "/api_sandwhiches/" component={SandwhichList} />
         <Route exact path="/sandwhiches/:sandwhichID/" component={SandwhichDetail} /> 
         <Route exact path="/soups/:soupID/" component={SoupDetail} />
         <Route exact path="/login/" component={Login} />
