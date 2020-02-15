@@ -1,46 +1,123 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import DropzoneComponent from "react-dropzone-component";
+
 import axios from 'axios';
 
 const FormItem = Form.Item;
 
 
 class SandwhichForm extends React.Component {
+    constructor(props) {
+        super(props);
     
-    handleFormSubmit = async (event, requestType, sandwhichID) => {
-        event.preventDefault();
-    
-        const postObj = {
-            title: event.target.elements.title.value,
-            content: event.target.elements.content.value
-        }   
+        this.state = {
+            name: "",
+            description: "",
+            category: "Sandwhiches",
+            position: "",
+            url: "",
+            item_img: "",
+            logo: "",
+            banner_img: "",
+            editMode: false,
+            apiUrl: "http://127.0.0.1:8000/api_sandwhiches/create/",
+            apiAction: "post"
+        };
 
+        this.handleFormChange = this.handleFormChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.handleThumbDrop = this.handleThumbDrop.bind(this);
+        this.handleBannerDrop = this.handleBannerDrop.bind(this);
+        this.handleLogoDrop = this.handleLogoDrop.bind(this);
+        this.deleteImage = this.deleteImage.bind(this);
+
+        this.bannerRef = React.createRef();
+        this.logoRef = React.createRef();
+    }
+
+    deleteImage(imageType) {
+        axios
+            .delete(
+                `http://127.0.0.1:8000/api_sandwhiches/delete-sandwhich-image/${this.state.sandwhichID}`,
+                { withCredentials: true }
+            )
+            .then(response => {
+                this.setState({
+                    [`${imageType}_url`]: ""
+                });
+            })
+            .catch(error => {
+                console.log("deleteImage error", error);
+            });
+    }
+
+    componentDidUpdate() {
+        if (Object.keys(this.props.sandwhichesToEdit).length > 0) {
+            const {
+                id,
+                name,
+                description,
+                category,
+                price,
+                position,
+                url
+            } = this.props.sandwhichesToEdit;
+
+            this.props.clearSandwhichesToEdit();
+
+            this.setState({
+                id: id,
+                name: name || "",
+                description: description || "",
+                category: category || "sandwhiches",
+                url: url || "",
+                editMode: true,
+                apiUrl: `http://127.0.0.1:8000/api_sandwhiches/sandwhiches/${sandwhichID}`,
+                apiAction: "patch",
+            });
+        }
+    }
+
+    handleLogoDrop() {
+        return {
+            addedfile: file => this.setState({ logo: file })
+        };
+    }
+    
+    handleFormSubmit(event) {
+        axios({
+            method: this.state.apiAction,
+            url: this.state.apiUrl,
+            data: this.buildForm(),
+            withCredentials: true,
+        })
+            .then(response => {
+                if (this.state.editMode) {
+                    this.props.handleEditFormSubmission();
+                } else {
+                    this.props.handleNewFormSubmission(response.data.sandwhiches);
+                }
+
+                this.setState({
+                    apiUrl: "http://127.0.0.1:8000/api_sandwhiches/create/",
+                    apiAction: "post"
+                });
+                
+
+            })
+    }
+'''
     axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
     axios.defaults.xsrfCookieName = "csrftoken";
     axios.defaults.headers = {
         "Content-Type": "application/json",
         Authorization: `Token ${this.props.token}`,
-    };
+    }; 
+'''
 
-    if (requestType === "post") {
-        await axios.post('http://127.0.0.1:8000/api_sandwhiches/create/', postObj)
-            .then(res => {
-                if (res.status === 201) {
-                    this.props.history.push(`/`);
-                }
-            })
-            .catch(error => console.error(error));
-    } else if (requestType === "put") {
-        await axios.put(`http://127.0.0.1:8000/api_sandwhiches/${sandwhichID}/update/`, postObj)
-            .then(res => {
-                if (res.status === 200) {
-                    this.props.history.push(`/`);
-                }
-            })
-            .catch(error => console.error(error));
-        }
-    };
+    
    
     render() {
         return (
@@ -79,27 +156,3 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps)(SandwhichForm);
 
- // handleFormSubmit = (event, requestType, sandwhichID) => {
-    //     // event.preventDefault();
-    //     const title = event.target.elements.title.value;
-    //     const content = event.target.elements.content.value;
-
-// eslint-disable-next-line
-        // switch( requestType ) {
-        //     case 'post':
-        //         return axios.post('http://127.0.0.1:8000/api_sandwhiches/', {
-        //             title: title,
-        //             content: content
-        //         })
-        //         .then(res => console.log(res))
-        //         .catch(error => console.err(error));
-            // eslint-disable-next-line
-    //         case 'put':
-    //             return axios.put(`http://127.0.0.1:8000/api_sandwhiches/${sandwhichID}/`, {
-    //                 title: title,
-    //                 content: content
-    //             })
-    //             .then(res => console.log(res))
-    //             .catch(error => console.log(error));
-    //     }
-    // }

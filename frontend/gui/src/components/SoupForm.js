@@ -70,29 +70,5 @@ const mapStateToProps = state => {
   
   export default connect(mapStateToProps)(SoupForm);
 
-// export default SoupForm;
 
-// handleFormSubmit = (event, requestType, soupID) => {
-//         // event.preventDefault();
-//         const title = event.target.elements.title.value;
-//         const content = event.target.elements.content.value;
-// eslint-disable-next-line
-//         switch( requestType ) {
-//             case 'post':
-//                 return axios.post('http://127.0.0.1:8000/api/', {
-//                     title: title,
-//                     content: content
-//                 })
-//                 .then(res => console.log(res))
-//                 .catch(error => console.err(error));
-//             // eslint-disable-next-line
-//             case 'put':
-//                 return axios.put(`http://127.0.0.1:8000/api/${soupID}/`, {
-//                     title: title,
-//                     content: content
-//                 })
-//                 .then(res => console.log(res))
-//                 .catch(error => console.log(error));
-//         }
-//     }
  
