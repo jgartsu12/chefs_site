@@ -1,98 +1,96 @@
-import React from 'react';
-import { Form, Icon, Input, Button, Spin } from 'antd';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import * as actions from '../store/actions/auth';
+import React, { Component } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const FormItem = Form.Item;
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
 
-class NormalLoginForm extends React.Component {
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.onAuth(values.username, values.password)
-      }
+    this.state = {
+      email: "",
+      password: "",
+      errorText: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+      errorText: ""
     });
-    this.props.history.push('/');
+  }
+
+  handleSubmit(event) {
+    axios
+      .post(
+        "http://127.0.0.1:8000/api/sessions",
+        {
+          client: {
+            email: this.state.email,
+            password: this.state.password
+          }
+        },
+        { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.status === "created") {
+          this.props.handleSuccessfulAuth();
+        } else {
+          this.setState({
+            errorText: "Wrong email or password"
+          });
+          this.props.handleUnsuccessfulAuth();
+        }
+      })
+      .catch(error => {
+        this.setState({
+          errorText: "An error occurred"
+        });
+        this.props.handleUnsuccessfulAuth();
+      });
+
+    event.preventDefault();
   }
 
   render() {
-    
-    let errorMessage = null;
-    if (this.props.error) {
-        errorMessage = (
-            <p>{this.props.error.message}</p>
-        ); // renders error if only auth fails
-    }
-
-    const { getFieldDecorator } = this.props.form;
     return (
-       <div>
-            {errorMessage}
-            {
-                this.props.loading ?
+      <div>
+        <h1>LOGIN TO ACCESS YOUR DASHBOARD</h1>
 
-                <Spin indicator={antIcon} />
+        <div>{this.state.errorText}</div>
 
-                : //otherwise show the form
+        <form onSubmit={this.handleSubmit} className="auth-form-wrapper">
+          <div className="form-group">
+            <FontAwesomeIcon icon="envelope" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </div>
 
-                <Form onSubmit={this.handleSubmit} className="login-form">
-                
-                    <FormItem>
-                    {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
-                    })(
-                        <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Username"
-                        />,
-                    )}
-                    </FormItem>
+          <div className="form-group">
+            <FontAwesomeIcon icon="lock" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Your password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+          </div>
 
-                    <FormItem>
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input your Password!' }],
-                    })(
-                        <Input
-                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type="password"
-                        placeholder="Password"
-                        />,
-                    )}
-                    </FormItem>
-                        <Button type="primary" htmlType="submit" style={{marginRight: '10px'}}>
-                            Login
-                        </Button>
-                        Or
-                        <NavLink style={{marginRight: '10px'}}
-                         to='/signup/'> Signup
-                        </NavLink>
-                    <FormItem>
-                    
-                    </FormItem>
-            </Form>
-        }
-    </div> 
+          <button className="btn" type="submit">
+            Login
+          </button>
+        </form>
+      </div>
     );
   }
 }
-
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
-
-const mapStateToProps = (state) => {
-    return {
-        loading: state.loading,
-        error: state.error
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onAuth: (username, password) => dispatch(actions.authLogin(username, password))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WrappedNormalLoginForm);
 

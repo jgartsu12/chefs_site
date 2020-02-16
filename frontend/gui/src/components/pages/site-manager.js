@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import SiteSidebarList from "../site/site-sidebar-list";
-import SiteForm from "../site/site-form";
+import SiteManagerSidebarList from "../site-manager/site-sidebar-list";
+import SiteManagerForm from "../site-manager/site-form";
 
-export default class PortfolioManager extends Component {
+export default class SiteManager extends Component {
   constructor() {
     super();
 
     this.state = {
-      portfolioItems: [],
-      portfolioToEdit: {}
+      siteManagerItems: [],
+      siteToEdit: {}
     };
 
     this.handleNewFormSubmission = this.handleNewFormSubmission.bind(this);
@@ -18,22 +18,22 @@ export default class PortfolioManager extends Component {
     this.handleFormSubmissionError = this.handleFormSubmissionError.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
-    this.clearPortfolioToEdit = this.clearPortfolioToEdit.bind(this);
+    this.clearSiteToEdit = this.clearSiteToEdit.bind(this);
   }
 
-  clearPortfolioToEdit() {
+  clearSiteToEdit() {
     this.setState({
-      portfolioToEdit: {}
+      siteToEdit: {}
     });
   }
 
-  handleEditClick(portfolioItem) {
+  handleEditClick(siteManagerItem) {
     this.setState({
-      portfolioToEdit: portfolioItem
+      siteToEdit: siteManagerItem
     });
   }
 
-  handleDeleteClick(portfolioItem) {
+  handleDeleteClick(siteManagerItem) {
     axios
       .delete(
         `https://api.devcamp.space/portfolio/portfolio_items/${portfolioItem.id}`,
@@ -41,8 +41,8 @@ export default class PortfolioManager extends Component {
       )
       .then(response => {
         this.setState({
-          portfolioItems: this.state.portfolioItems.filter(item => {
-            return item.id !== portfolioItem.id;
+          siteManagerItems: this.state.siteManagerItems.filter(item => {
+            return item.id !== siteManagerItem.id;
           })
         });
 
@@ -54,12 +54,12 @@ export default class PortfolioManager extends Component {
   }
 
   handleEditFormSubmission() {
-    this.getPortfolioItems();
+    this.getSiteManagerItems();
   }
 
-  handleNewFormSubmission(portfolioItem) {
+  handleNewFormSubmission(siteManagerItem) {
     this.setState({
-      portfolioItems: [portfolioItem].concat(this.state.portfolioItems)
+      siteManagerItems: [siteManagerItem].concat(this.state.siteManagerItems)
     });
   }
 
@@ -67,7 +67,7 @@ export default class PortfolioManager extends Component {
     console.log("handleFormSubmissionError error", error);
   }
 
-  getPortfolioItems() {
+  getSiteManagerItems() {
     axios
       .get(
         "https://johncgartsu.devcamp.space/portfolio/portfolio_items?order_by=created_at&direction=desc",
@@ -77,35 +77,35 @@ export default class PortfolioManager extends Component {
       )
       .then(response => {
         this.setState({
-          portfolioItems: [...response.data.portfolio_items]
+          siteManagerItems: [...response.data.site_manager_items]
         });
       })
       .catch(error => {
-        console.log("error in getPortfolioItems", error);
+        console.log("error in getSiteManagerItems", error);
       });
   }
 
   componentDidMount() {
-    this.getPortfolioItems();
+    this.getSiteManagerItems();
   }
 
   render() {
     return (
-      <div className="portfolio-manager-wrapper">
+      <div className="site-manager-wrapper">
         <div className="left-column">
-          <PortfolioForm
+          <SiteManagerForm
             handleNewFormSubmission={this.handleNewFormSubmission}
             handleEditFormSubmission={this.handleEditFormSubmission}
             handleFormSubmissionError={this.handleFormSubmissionError}
-            clearPortfolioToEdit={this.clearPortfolioToEdit}
-            portfolioToEdit={this.state.portfolioToEdit}
+            clearSiteToEdit={this.clearSiteToEdit}
+            siteToEdit={this.state.siteToEdit}
           />
         </div>
 
         <div className="right-column">
-          <PortfolioSidebarList
+          <SiteManagerSidebarList
             handleDeleteClick={this.handleDeleteClick}
-            data={this.state.portfolioItems}
+            data={this.state.siteManagerItems}
             handleEditClick={this.handleEditClick}
           />
         </div>
